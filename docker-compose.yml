@@ -1,25 +1,27 @@
-version: '3'
+version: "3"
 services:
-  app:
-    build: .
+  server:
+    build: ./server
+    env_file:
     depends_on:
       - postgres
-    environment:
-      DATABASE_URL: postgres://user:pass@postgres:5432/db
-      NODE_ENV: development
-      PORT: 3000
     ports:
-      - '3000:3000'
-    command: npm run dev
+      - "5000:5000"
     volumes:
-      - .:/app/
-      - /app/node_modules
-
+      - ./server:/home/node/code
+      - /server/home/node/code/node_modules
   postgres:
-    image: postgres:10.4
+    image: postgres
     ports:
-      - '35432:5432'
+      - "5432:5432"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: db
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user
+      PGADMIN_DEFAULT_PASSWORD: pass
