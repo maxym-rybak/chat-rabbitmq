@@ -2,7 +2,6 @@ version: "3"
 services:
   server:
     build: ./server
-    env_file:
     depends_on:
       - postgres
     ports:
