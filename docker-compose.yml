@@ -1,14 +1,25 @@
 version: "3"
 services:
+  # Client
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./client:/app"
+      - "/app/node_modules"
+    stdin_open: true
+  # Server
   server:
     build: ./server
     depends_on:
       - postgres
     ports:
       - "5000:5000"
+      - "5001:5555" # for prisma studio
     volumes:
-      - ./server:/home/node/code
-      - /server/home/node/code/node_modules
+      - ./server:/app
+      - "/app/node_modules"
   postgres:
     image: postgres
     ports:
@@ -16,7 +27,9 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+      POSTGRES_DB: postgres
+    volumes:
+      - ./server/postgres-data:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4
     ports:
