@@ -7,7 +7,6 @@ services:
       - "3000:3000"
     volumes:
       - "./client:/app"
-      - "/app/node_modules"
     stdin_open: true
   # Server
   server:
@@ -19,7 +18,6 @@ services:
       - "5001:5555" # for prisma studio
     volumes:
       - ./server:/app
-      - "/app/node_modules"
   postgres:
     image: postgres
     ports:
@@ -37,3 +35,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user
       PGADMIN_DEFAULT_PASSWORD: pass
+
+  rabbitmq:
+    image: rabbitmq:3.8.5-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
