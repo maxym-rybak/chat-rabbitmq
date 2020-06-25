@@ -4,6 +4,10 @@ FROM node:12.18.1-alpine3.9
 RUN mkdir /app
 WORKDIR /app
 
+# install app dependencies
+COPY package-lock.json package.json ./
+RUN npm ci
+
 COPY . .
 
 CMD ["npm", "run", "dev"]
