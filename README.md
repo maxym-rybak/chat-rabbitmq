@@ -1,8 +1,6 @@
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `docker-compose up`
 
 Runs the app in the development mode.<br />
